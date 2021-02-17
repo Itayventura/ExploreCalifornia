@@ -1,24 +1,29 @@
 package com.itayvenutra.exploreCalifornia.domain;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Objects;
 
-@Entity
+
+@Document
 public class TourRating {
 
-    @EmbeddedId
-    private TourRatingPk pk;
+    @Id
+    private String id;
 
-    @Column(nullable = false)
+    private String tourId;
+
+    private Integer customerId;
+
+
     private Integer score;
 
-    @Column
     private String comment;
 
-    public TourRating(TourRatingPk pk, Integer score, String comment) {
-        this.pk = pk;
+    public TourRating(String tourId, Integer customerId, Integer score, String comment) {
+        this.tourId = tourId;
+        this.customerId = customerId;
         this.score = score;
         this.comment = comment;
     }
@@ -26,44 +31,16 @@ public class TourRating {
     protected TourRating() {
     }
 
-    @Override
-    public String toString() {
-        return "TourRating{" +
-                "pk=" + pk +
-                ", score=" + score +
-                ", comment='" + comment + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TourRating that = (TourRating) o;
-        return Objects.equals(pk, that.pk) &&
-                Objects.equals(score, that.score) &&
-                Objects.equals(comment, that.comment);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pk, score, comment);
-    }
-
-    public TourRatingPk getPk() {
-        return pk;
-    }
-
     public Integer getScore() {
         return score;
     }
 
-    public String getComment() {
-        return comment;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setPk(TourRatingPk pk) {
-        this.pk = pk;
+    public String getComment() {
+        return comment;
     }
 
     public void setScore(Integer score) {
@@ -74,4 +51,31 @@ public class TourRating {
         this.comment = comment;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TourRating that = (TourRating) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(tourId, that.tourId) &&
+                Objects.equals(customerId, that.customerId) &&
+                Objects.equals(score, that.score) &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tourId, customerId, score, comment);
+    }
+
+    @Override
+    public String toString() {
+        return "TourRating{" +
+                "id='" + id + '\'' +
+                ", tourId='" + tourId + '\'' +
+                ", customerId=" + customerId +
+                ", score=" + score +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }
