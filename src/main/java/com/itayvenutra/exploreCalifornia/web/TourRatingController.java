@@ -6,6 +6,9 @@ import com.itayvenutra.exploreCalifornia.domain.TourRatingPk;
 import com.itayvenutra.exploreCalifornia.repo.TourRatingRepository;
 import com.itayvenutra.exploreCalifornia.repo.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +36,14 @@ public class TourRatingController {
     }
 
     @GetMapping
-    public List<RatingDto> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId) {
+    public Page<RatingDto> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId, Pageable pageable) {
         verifyTour(tourId);
-        return tourRatingRepository.findByPkTourId(tourId).stream()
-                .map(RatingDto::new).collect(Collectors.toList());
+        Page<TourRating> ratings = tourRatingRepository.findByPkTourId(tourId, pageable);
+        return new PageImpl<>(
+                ratings.get().map(RatingDto::new).collect(Collectors.toList()),
+                pageable,
+                ratings.getTotalElements()
+        );
     }
 
     @GetMapping(path = "/average")
