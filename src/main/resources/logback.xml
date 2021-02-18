@@ -2,6 +2,6 @@
 <configuration>
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="com.example.ec" level="DEBUG"/>
+    <logger name="com.itayventura.exploreCalifornia" level="DEBUG"/>
 </configuration>
 
