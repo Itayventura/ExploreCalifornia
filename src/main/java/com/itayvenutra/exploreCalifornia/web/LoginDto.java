@@ -23,6 +23,12 @@ public class LoginDto {
         this.password = password;
     }
 
+    public LoginDto(String username, String password, String firstName, String lastName) {
+        this(username, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getUsername() {
         return username;
     }
