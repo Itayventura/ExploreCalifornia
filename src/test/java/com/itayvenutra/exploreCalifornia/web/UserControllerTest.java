@@ -23,6 +23,6 @@ class UserControllerTest {
 
     @Test
     public void getAllUsers(){
-        
+
     }
 }
